@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, FlatList, StyleSheet } from "react-native";
 
-export default function HistoryScreen(route, navigation) {
+export default function HistoryScreen({ route, navigation }) {
   const { data } = route.params;
 
   return (
