@@ -35,7 +35,7 @@ export default function App() {
 
   const calculate = () => {
     getRepositories();
-    setText(keyword / currencyvalue[selectedValue] + "€");
+    setText((keyword / currencyvalue[selectedValue]).toFixed(2) + "€");
   };
 
   return (
