@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "t6",
-    "slug": "t6",
+    "name": "t7",
+    "slug": "t7",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,7 +27,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "description": ""
+    }
   }
 }
