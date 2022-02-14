@@ -81,3 +81,5 @@ const styles = StyleSheet.create({
     width: 32,
   },
 });
+
+/* Ohjelma toimii kun muutaman kerran painelee convert nappulaa */
