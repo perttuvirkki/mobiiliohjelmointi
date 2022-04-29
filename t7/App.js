@@ -3,66 +3,69 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   Button,
   Picker,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
 export default function App() {
-  const [selectedValue, setSelectedValue] = useState("");
-  const [alldata, setAlldata] = useState([]);
-  const [currencyvalue, setCurrencyvalue] = useState([]);
-  const [keyword, setKeyword] = useState(0);
-  const [text, setText] = useState("");
+  const [rates, setRates] = useState({});
+  const [selected, setSelected] = useState("");
+  const [amount, setAmount] = useState("");
+  const [eur, setEur] = useState("");
 
-  useEffect(() => {
-    getRepositories();
-  }, []);
+  const getData = async () => {
+    const url =
+      "http://api.exchangeratesapi.io/latest?access_key=da303e5ede9ea02a4f72af84f0b588c9";
 
-  const getRepositories = () => {
-    fetch(
-      "http://api.exchangeratesapi.io/latest?access_key=da303e5ede9ea02a4f72af84f0b588c9"
-    )
-      .then((response) => response.json())
-      .then((data) => setAlldata(data.rates))
-      .catch((error) => {
-        Alert.alert("Error", error);
-      });
-    setCurrencyvalue(Object.values(alldata));
+    try {
+      const response = await fetch(url);
+      const currencyData = await response.json();
+      setRates(currencyData.rates);
+    } catch (e) {
+      Alert.alert("Error fetching data");
+    }
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   const calculate = () => {
-    getRepositories();
-    setText((keyword / currencyvalue[selectedValue]).toFixed(2) + "€");
+    const amountEur = Number(amount) / rates[selected];
+    setEur(`${amountEur.toFixed(2)}€`);
   };
 
   return (
     <View style={styles.container}>
-      <Text>{text}</Text>
+      <Text>{eur}</Text>
       <View style={styles.spacer} />
 
       <Picker
-        selectedValue={selectedValue}
+        selectedValue={selected}
         style={{ height: 50, width: 150 }}
         itemStyle={{ height: 44 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        onValueChange={(itemValue, itemIndex) => setSelected(itemValue)}
       >
-        {Object.keys(alldata).map((item, index) => {
-          return <Picker.Item label={item} value={index} key={index} />;
-        })}
+        {Object.keys(rates)
+          .sort()
+          .map((key) => (
+            <Picker.Item label={key} value={key} key={key} />
+          ))}
       </Picker>
       <View style={styles.spacer} />
 
       <TextInput
         style={{ fontSize: 18, width: 200, borderWidth: 1, padding: 5 }}
         placeholder="number"
-        onChangeText={(text) => setKeyword(text)}
+        keyboardType="numeric"
+        onChangeText={(text) => setAmount(text)}
       />
       <View style={styles.spacer} />
 
-      <Button title="Convert" onPress={() => calculate()} />
+      <Button title="Convert" onPress={calculate} />
 
       <StatusBar style="auto" />
     </View>
