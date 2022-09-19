@@ -70,11 +70,6 @@ export default function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate("History", { data })}
         />
       </View>
-      <Text>History:</Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Text>{item.key}</Text>}
-      />
     </View>
   );
 }
