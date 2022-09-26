@@ -12,39 +12,40 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 export default function App() {
-  // Location example
   const [region, setRegion] = useState({
     latitude: 60.200692,
     longitude: 24.934302,
     latitudeDelta: 0.0322,
     longitudeDelta: 0.0221,
   });
-  const [address, setAddress] = useState(""); // State where
+  const [address, setAddress] = useState("");
+  const [search, setSearch] = useState(false);
+
+  const fetchLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("No permission to get location");
+      return;
+    } else {
+      try {
+        let location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+        });
+        console.log("Location:", location);
+        setRegion({
+          ...region,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("No permission to get location");
-        return;
-      } else {
-        try {
-          let location = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.High,
-          });
-          console.log("Location:", location);
-          setRegion({
-            ...region,
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    };
     fetchLocation();
-  }, []);
+  }, [search]);
 
   const getCoordinates = async (location) => {
     const KEY = "aSm0nphUtbAWcEDmzHqDYqZOrnjisK7c";
@@ -63,8 +64,6 @@ export default function App() {
     Keyboard.dismiss();
   };
 
-  // Mapview example
-
   return (
     <View style={styles.container}>
       <MapView style={styles.map} region={region}>
@@ -78,7 +77,9 @@ export default function App() {
         value={address}
         onChangeText={(text) => setAddress(text)}
       />
-      <Button title="SHOW" onPress={() => getCoordinates(address)} />
+      <Button title="Show" onPress={() => getCoordinates(address)} />
+      <Button title="My location" onPress={() => setSearch(!search)} />
+
       <View style={styles.spacer} />
       <View style={styles.spacer} />
     </View>

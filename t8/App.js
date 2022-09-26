@@ -3,7 +3,6 @@ import {
   StyleSheet,
   StatusBar,
   View,
-  Text,
   Button,
   TextInput,
   Keyboard,
@@ -16,15 +15,15 @@ export default function App() {
   const initial = {
     latitude: 60.200692,
     longitude: 24.934302,
-    latitudeDelta: 0.0322,
-    longitudeDelta: 0.0221,
+    latitudeDelta: 0.04,
+    longitudeDelta: 0.05,
   };
   const [region, setRegion] = useState(initial);
-  const [address, setAddress] = useState(""); // State where location is saved
+  const [address, setAddress] = useState("");
 
-  const getCoordinates = async (location) => {
+  const getCoordinates = async (address) => {
     const KEY = "aSm0nphUtbAWcEDmzHqDYqZOrnjisK7c";
-    const url = `http://www.mapquestapi.com/geocoding/v1/address?key=${KEY}&location=${location}`;
+    const url = `http://www.mapquestapi.com/geocoding/v1/address?key=${KEY}&location=${address}`;
 
     try {
       const response = await fetch(url);
@@ -37,6 +36,7 @@ export default function App() {
       Alert.alert("Error fetching data");
     }
     Keyboard.dismiss();
+    console.log(url);
   };
 
   // Mapview example
