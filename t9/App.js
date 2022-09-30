@@ -21,7 +21,7 @@ export default function App() {
   const [markers, setMarkers] = useState([]);
   const KEY = "";
   const url_address = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${KEY}`;
-  const url_restaurants = `/place/nearbysearch/json?location=${location.latitude}%2C${location.longitude}&radius=500&type=restaurant&keyword=cruise&key=${KEY}`;
+  const url_restaurants = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude}%2C${location.longitude}&radius=500&type=restaurant&keyword=cruise&key=${KEY}`;
 
   const fetchData = async () => {
     try {
@@ -40,7 +40,7 @@ export default function App() {
 
   const findRestaurants = async () => {
     try {
-      const response = await fetch(url_address + url_restaurants);
+      const response = await fetch(url_restaurants);
       const data = await response.json();
 
       setMarkers(data.results);
