@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   StatusBar,
@@ -8,10 +8,8 @@ import {
   Keyboard,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 
 export default function App() {
-  // Location example
   const initial = {
     latitude: 60.200692,
     longitude: 24.934302,
@@ -29,7 +27,7 @@ export default function App() {
       const response = await fetch(url);
       const data = await response.json();
 
-      const { lat, lng } = data.results[0].locations[0].latLng;
+      const { lat, lng } = data.results[0].locations[0].displayLatLng;
       console.log(lat, lng);
       setRegion({ ...region, latitude: lat, longitude: lng });
     } catch (e) {
@@ -38,8 +36,6 @@ export default function App() {
     Keyboard.dismiss();
     console.log(url);
   };
-
-  // Mapview example
 
   return (
     <View style={styles.container}>

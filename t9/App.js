@@ -40,7 +40,7 @@ export default function App() {
 
   const findRestaurants = async () => {
     try {
-      const response = await fetch(url_restaurants);
+      const response = await fetch(url_address + url_restaurants);
       const data = await response.json();
 
       setMarkers(data.results);
