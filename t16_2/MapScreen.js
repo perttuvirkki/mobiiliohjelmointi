@@ -63,6 +63,7 @@ export default function MapScreen({ route, navigation }) {
       <Button
         onPress={() => {
           saveItem();
+          Alert.alert("Saved to favourites!");
         }}
       >
         <Icon name="save" color="white"></Icon>
