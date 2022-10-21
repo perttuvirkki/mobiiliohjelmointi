@@ -5,7 +5,7 @@ import * as Speech from "expo-speech";
 export default function App() {
   const [text, setText] = useState("I am your father");
   const speak = () => {
-    Speech.speak(text, { pitch: 0.1, rate: 0.5 });
+    Speech.speak(text, { pitch: 0.1, rate: 0.5, language: "fi-FI" });
     console.log(text);
   };
 
