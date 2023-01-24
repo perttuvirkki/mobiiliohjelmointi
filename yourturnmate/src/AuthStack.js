@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {Login} from './Login';
-import {Register} from './Register';
+import {LoginScreen} from './Screens/LoginScreen';
+import {RegisterScreen} from './Screens/RegisterScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './context/AuthContext';
@@ -17,13 +17,13 @@ const AuthStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen
-        name="Login"
-        component={Login}
+        name="LoginScreen"
+        component={LoginScreen}
         options={{title: 'Sign up'}}
       />
       <Stack.Screen
-        name="Register"
-        component={Register}
+        name="RegisterScreen"
+        component={RegisterScreen}
         options={{title: 'Register'}}
       />
     </Stack.Navigator>

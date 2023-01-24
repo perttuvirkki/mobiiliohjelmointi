@@ -2,11 +2,14 @@ import React, {useContext} from 'react';
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import {Routes} from './src/Routes';
 import {AuthContextProvider} from './src/context/AuthContext';
+import {ChatContextProvider} from './src/context/ChatContext';
 
 const App = () => {
   return (
     <AuthContextProvider>
-      <Routes />
+      <ChatContextProvider>
+        <Routes />
+      </ChatContextProvider>
     </AuthContextProvider>
   );
 };

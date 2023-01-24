@@ -9,6 +9,7 @@ import {
   Keyboard,
 } from "react-native";
 import MapView, { Marker, MarkerAnimated } from "react-native-maps";
+import { MAPS_API_KEY } from "@env";
 
 export default function App() {
   const [address, setAddress] = useState("");
@@ -19,14 +20,15 @@ export default function App() {
     longitudeDelta: 0.0221,
   });
   const [markers, setMarkers] = useState([]);
-  const KEY = "";
-  const url_address = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${KEY}`;
-  const url_restaurants = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude}%2C${location.longitude}&radius=500&type=restaurant&keyword=cruise&key=${KEY}`;
+
+  const url_address = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAPS_API_KEY}`;
+  const url_restaurants = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude}%2C${location.longitude}&radius=500&type=restaurant&keyword=cruise&key=${MAPS_API_KEY}`;
 
   const fetchData = async () => {
     try {
       const response = await fetch(url_address);
       const data = await response.json();
+      console.log(data);
 
       setLocation({
         ...location,
@@ -42,7 +44,6 @@ export default function App() {
     try {
       const response = await fetch(url_restaurants);
       const data = await response.json();
-
       setMarkers(data.results);
     } catch (e) {
       console.log(e);
@@ -57,15 +58,14 @@ export default function App() {
     <View style={styles.container}>
       <MapView style={styles.map} region={location}>
         {markers.map((marker, index) => (
-          <Marker>
+          <Marker
             key={index}
-            coordinate=
-            {{
+            coordinate={{
               latitude: marker.geometry.location.lat,
               longitude: marker.geometry.location.lng,
             }}
             title={marker.name}
-          </Marker>
+          />
         ))}
       </MapView>
       <View style={styles.spacer} />

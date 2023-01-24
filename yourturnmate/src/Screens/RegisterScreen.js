@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
-import {auth, db, storage, data} from '../firebase/firebaseConfig';
+import {auth, db, storage, data} from '../../firebase/firebaseConfig';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
 import ImagePicker from 'react-native-image-crop-picker';
 
-export const Register = ({navigation}) => {
+export const RegisterScreen = ({navigation}) => {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const [displayName, setDisplayName] = useState('');
@@ -98,7 +98,7 @@ export const Register = ({navigation}) => {
       />
       <Button onPress={addPhoto} title="Add photo"></Button>
       <Button onPress={handleSubmit} title="Sign up"></Button>
-      <Text onPress={() => navigation.navigate('Login')}>
+      <Text onPress={() => navigation.navigate('LoginScreen')}>
         Already have an account? Sign in
       </Text>
       {loading && (

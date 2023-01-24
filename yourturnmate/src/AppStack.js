@@ -1,21 +1,31 @@
 import React, {useContext} from 'react';
-import {Home} from './Home';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ChatsScreen from './Screens/ChatsScreen';
+import SearchScreen from './Screens/SearchScreen';
 import {AuthContext} from './context/AuthContext';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const AppStack = () => {
   const {currentUser} = useContext(AuthContext);
   const {isAuthenticated} = useContext(AuthContext);
 
   return (
-    <Stack.Navigator
+    <Tab.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
-    </Stack.Navigator>
+      <Tab.Screen
+        name="Chats"
+        component={ChatsScreen}
+        options={{title: 'Chats'}}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{title: 'Search'}}
+      />
+    </Tab.Navigator>
   );
 };
 
